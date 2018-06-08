@@ -64,6 +64,7 @@
                     <connections>
                         <outlet property="allTimeDuration" destination="mRk-kO-AFg" id="48f-oj-IX9"/>
                         <outlet property="currentSessionDuration" destination="t9R-TD-FUG" id="nNR-hN-GJG"/>
+                        <outlet property="startStopButton" destination="2M2-2G-U6r" id="2ag-bH-H60"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
