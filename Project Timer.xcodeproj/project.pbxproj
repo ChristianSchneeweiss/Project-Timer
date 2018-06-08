@@ -57,14 +57,46 @@
 			isa = PBXGroup;
 			children = (
 				4E6A9A8020CB327100B91876 /* AppDelegate.swift */,
-				4E6A9A8220CB327100B91876 /* ViewController.swift */,
-				4E6A9A8420CB327100B91876 /* Main.storyboard */,
-				4E6A9A8A20CB327200B91876 /* Assets.xcassets */,
-				4E6A9A8C20CB327200B91876 /* LaunchScreen.storyboard */,
+				4E6A9A9520CB32A000B91876 /* Views */,
+				4E6A9A9620CB32A900B91876 /* Data Model */,
+				4E6A9A9720CB32BC00B91876 /* Controller */,
+				4E6A9A9820CB32CF00B91876 /* Supporting Files */,
 				4E6A9A8F20CB327200B91876 /* Info.plist */,
-				4E6A9A8720CB327100B91876 /* Project_Timer.xcdatamodeld */,
 			);
 			path = "Project Timer";
+			sourceTree = "<group>";
+		};
+		4E6A9A9520CB32A000B91876 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4E6A9A8420CB327100B91876 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4E6A9A9620CB32A900B91876 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				4E6A9A8720CB327100B91876 /* Project_Timer.xcdatamodeld */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		4E6A9A9720CB32BC00B91876 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4E6A9A8220CB327100B91876 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4E6A9A9820CB32CF00B91876 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4E6A9A8A20CB327200B91876 /* Assets.xcassets */,
+				4E6A9A8C20CB327200B91876 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9V425YGM98;
 				INFOPLIST_FILE = "Project Timer/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -294,7 +327,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.christianschneeweiss.Project-Timer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,6 +338,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9V425YGM98;
 				INFOPLIST_FILE = "Project Timer/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,7 +346,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.christianschneeweiss.Project-Timer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
