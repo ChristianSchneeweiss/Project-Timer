@@ -104,4 +104,14 @@ class TableViewController: UITableViewController {
 		present(alert, animated: true, completion: nil)
 	}
 	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "goToTimer" {
+			if let indexPath = tableView.indexPathForSelectedRow
+			{
+				let destinationVC = segue.destination as! ViewController
+				destinationVC.selectedProject = projects[indexPath.row]
+			}
+		}
+	}
+	
 }

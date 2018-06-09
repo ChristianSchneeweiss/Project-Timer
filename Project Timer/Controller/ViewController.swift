@@ -38,7 +38,9 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		configureTimerAtStart()
-		load()		
+		
+		navigationBar.title = selectedProject?.name!
+		preparationForView()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -69,19 +71,24 @@ class ViewController: UIViewController {
 		let request : NSFetchRequest<ProjectTimeInterval> = ProjectTimeInterval.fetchRequest()
 		let sorting = NSSortDescriptor(key: "startDate", ascending: true)
 		request.sortDescriptors = [sorting]
+		let predicate = NSPredicate(format: "parentProject.name MATCHES %@", (selectedProject?.name!)!)
+		request.predicate = predicate
+		
 		do {
 			intervals = try context.fetch(request)
-			if let running = (intervals.last?.running) {
-				timerRunning = running
-			}
-			calculateTime()
-			updateAllTimeLabel()
-			updateCurrentTimeLabel()
 		}
 		catch {
 			print("Error while fetching intervals, \(error)")
 		}
-		
+	}
+	
+	func preparationForView() {
+		if let running = (intervals.last?.running) {
+			timerRunning = running
+		}
+		calculateTime()
+		updateAllTimeLabel()
+		updateCurrentTimeLabel()
 	}
 	
 	
@@ -144,6 +151,7 @@ class ViewController: UIViewController {
 		let newInterval = ProjectTimeInterval(context: context)
 		newInterval.startDate = Date()
 		newInterval.running = true
+		newInterval.parentProject = selectedProject
 		intervals.append(newInterval)
 		prevDate = Date()
 		save()
