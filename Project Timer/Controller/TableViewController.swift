@@ -14,6 +14,7 @@ class TableViewController: UITableViewController {
 	var projects = [Project]()
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +24,10 @@ class TableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
 		tableView.register(UINib(nibName: "ProjectsCell", bundle: nil), forCellReuseIdentifier: "ProjectsCell")
+		let refreshControl = UIRefreshControl()
+		tableView.refreshControl = refreshControl
+		refreshControl.addTarget(self, action: #selector(refreshProjectData), for: .valueChanged)
+		refreshControl.attributedTitle = NSAttributedString(string: "Updating ... ")
 		
 		loadProjects()
     }
@@ -49,6 +54,11 @@ class TableViewController: UITableViewController {
 
         return cell
     }
+	
+	@objc func refreshProjectData() {
+		tableView.reloadData()
+		tableView.refreshControl?.endRefreshing()
+	}
 	
 	
 	//MARK: Core Data Methods
