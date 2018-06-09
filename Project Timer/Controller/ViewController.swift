@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import CoreData
 
 class ViewController: UIViewController {
 
@@ -18,14 +19,12 @@ class ViewController: UIViewController {
 	
 	var timer = Timer()
 	
+	var intervals = [ProjectTimeInterval]()
+	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+	
 	var timePassedInSeconds : UInt = 0
 	var allTimePassedInSeconds : UInt = 0
-	var startDate = Date()
 	var prevDate = Date()
-	
-	var seconds : UInt = 0
-	var minutes : UInt = 0
-	var hours : UInt = 0
 	
 	var timerRunning : Bool = false
 	
@@ -33,7 +32,7 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		configureTimerAtStart()
-		navigationBar.title = "HelloWorld"
+		load()		
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -49,12 +48,42 @@ class ViewController: UIViewController {
 		return (hoursString, minutesString, secondsString)
 	}
 	
+	//MARK: Core Data Manipulation
+	
+	func save() {
+		do {
+			try context.save()
+		}
+		catch {
+			print("Error while saving Context, \(error)")
+		}
+	}
+	
+	func load() {
+		let request : NSFetchRequest<ProjectTimeInterval> = ProjectTimeInterval.fetchRequest()
+		let sorting = NSSortDescriptor(key: "startDate", ascending: true)
+		request.sortDescriptors = [sorting]
+		do {
+			intervals = try context.fetch(request)
+			if let running = (intervals.last?.running) {
+				timerRunning = running
+			}
+			calculateTime()
+			updateAllTimeLabel()
+			updateCurrentTimeLabel()
+		}
+		catch {
+			print("Error while fetching intervals, \(error)")
+		}
+		
+	}
+	
 	
 	//MARK: UI Update
 	
 	func updateCurrentTimeLabel() {
-		caluclateCurrentPassedTime()
-		let (hoursString,minutesString,secondsString) = timeToString(hours: hours, minutes: minutes, seconds: seconds)
+		let (h,m,s) = secondsToHoursMinutesSeconds(seconds: timePassedInSeconds)
+		let (hoursString,minutesString,secondsString) = timeToString(hours: h, minutes: m, seconds: s)
 		currentSessionDuration.text = "\(hoursString):\(minutesString):\(secondsString)"
 	}
 	
@@ -66,12 +95,25 @@ class ViewController: UIViewController {
 
 	//MARK: Calculations
 	
-	func caluclateCurrentPassedTime() {
-		(hours,minutes,seconds) = secondsToHoursMinutesSeconds(seconds: timePassedInSeconds)
-	}
-	
 	func secondsToHoursMinutesSeconds (seconds : UInt) -> (UInt, UInt, UInt) {
 		return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+	}
+	
+	func calculateTime() {
+		allTimePassedInSeconds = 0
+		timePassedInSeconds = 0
+		for interval in intervals {
+			if !interval.running {
+				allTimePassedInSeconds += UInt(round((interval.endDate?.timeIntervalSince(interval.startDate!))!))				
+			}
+		}
+		if timerRunning {
+			if let startDate = intervals.last?.startDate {
+				let currentDate = Date()
+				timePassedInSeconds = UInt(round(currentDate.timeIntervalSince(startDate)))
+			}
+		}
+		allTimePassedInSeconds += timePassedInSeconds
 	}
 	
 	//MARK: Timer logic
@@ -79,7 +121,6 @@ class ViewController: UIViewController {
 	func configureTimerAtStart() {
 		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
 			if self.timerRunning {
-				
 				let currentDate = Date()
 				
 				let interval = round(currentDate.timeIntervalSince(self.prevDate))
@@ -93,28 +134,50 @@ class ViewController: UIViewController {
 		}
 	}
 	
+	fileprivate func startTimer() {
+		let newInterval = ProjectTimeInterval(context: context)
+		newInterval.startDate = Date()
+		newInterval.running = true
+		intervals.append(newInterval)
+		prevDate = Date()
+		save()
+		timePassedInSeconds = 0
+		startStopButton.setTitle("Stop", for: .normal)
+	}
+	
+	fileprivate func stopTimer() {
+		timePassedInSeconds = 0
+		intervals.last?.running = false
+		intervals.last?.endDate = Date()
+		startStopButton.setTitle("Start", for: .normal)
+		save()
+	}
+	
 	@IBAction func startStopButtonPressed(_ sender: UIButton) {
 		timerRunning = !timerRunning
 		if timerRunning {
-			startDate = Date()
-			prevDate = startDate
-			startStopButton.setTitle("Stop", for: .normal)
+			startTimer()
 		}
 		else {
-			timePassedInSeconds = 0
-			startStopButton.setTitle("Start", for: .normal)
+			stopTimer()
 		}
 		
 		
 	}
 	
 	@IBAction func restartButtonPressed(_ sender: Any) {
+		for interval in intervals {
+			context.delete(interval)
+		}
+		save()
+		intervals = [ProjectTimeInterval]()
 		timerRunning = false
 		timePassedInSeconds = 0
 		allTimePassedInSeconds = 0
 		updateAllTimeLabel()
 		updateCurrentTimeLabel()
-		startStopButton.setTitle("Start", for: .normal)		
+		startStopButton.setTitle("Start", for: .normal)
+		
 	}
 }
 
