@@ -10,6 +10,8 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
+	var projects = ["Work", "School", "Stuff"]
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +20,7 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+		tableView.register(UINib(nibName: "ProjectsCell", bundle: nil), forCellReuseIdentifier: "ProjectsCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,14 +31,14 @@ class TableViewController: UITableViewController {
     // MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 0
+		return projects.count
 	}
 
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectsCell", for: indexPath) as! ProjectsCell
 
-        // Configure the cell...
+        cell.titleLabel.text = projects[indexPath.row]
 
         return cell
     }
