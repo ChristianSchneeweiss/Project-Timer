@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-import CoreData
+import RealmSwift
 
 protocol CanBeUpdated {
 	func update()

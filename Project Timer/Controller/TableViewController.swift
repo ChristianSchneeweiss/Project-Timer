@@ -7,13 +7,13 @@
 // Appicon : <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class TableViewController: UITableViewController {
 
-	var projects = [Project]()
-	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+	var projects : Results<Project>?
 	
+	let realm = try! Realm()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +40,26 @@ class TableViewController: UITableViewController {
     // MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return projects.count
+		return projects?.count ?? 1
 	}
 
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectsCell", for: indexPath) as! ProjectsCell
-
-		let currentProject = projects[indexPath.row]
-        cell.titleLabel.text = currentProject.name
 		
-		let (seconds, running) = getProjectDependentInformation(for: currentProject)
-		let hourString = seconds/3600 > 10 ? "\(seconds / 3600)" : "0\(seconds / 3600)"
-		let minutesString = seconds % 3600 / 60 > 10 ? "\(seconds % 3600 / 60)" : "0\(seconds % 3600 / 60)"
-		cell.timeLabel.text = "\(hourString):\(minutesString)"
-		cell.clockAnimationImage.image = running ? UIImage(named: "hourglass") : UIImage() // <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+		if let currentProject = projects?[indexPath.row] {
+        	cell.titleLabel.text = currentProject.name
+		
+			let (seconds, running) = getProjectDependentInformation(for: currentProject)
+			let hourString = seconds/3600 > 10 ? "\(seconds / 3600)" : "0\(seconds / 3600)"
+			let minutesString = seconds % 3600 / 60 > 10 ? "\(seconds % 3600 / 60)" : "0\(seconds % 3600 / 60)"
+			cell.timeLabel.text = "\(hourString):\(minutesString)"
+			cell.clockAnimationImage.image = running ? UIImage(named: "hourglass") : UIImage() // <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+		}
+		else {
+			cell.titleLabel.text = "No Projects have been added yet"
+			cell.timeLabel.text = ""
+		}
 
         return cell
     }
@@ -65,64 +70,29 @@ class TableViewController: UITableViewController {
 	}
 	
 	
-	//MARK: Core Data Methods
+	//MARK: Realm Data Methods
 	
-	func saveProjects() {
-		do {
-			try context.save()
-		}
-		catch {
-			print("Error while saving Projects, \(error)")
-		}
-		
-		tableView.reloadData()
-	}
 	
 	func loadProjects() {
-		let request : NSFetchRequest<Project> = Project.fetchRequest()
-		do {
-			projects = try context.fetch(request)
-		}
-		catch {
-			print("Error while fetching Projects, \(error)")
-		}
-		
+		projects = realm.objects(Project.self)
 		tableView.reloadData()
-	}
-	
-	fileprivate func getProjectIntervals(_ project: Project) -> [ProjectTimeInterval] {
-		let request : NSFetchRequest<ProjectTimeInterval> = ProjectTimeInterval.fetchRequest()
-		let sorting = NSSortDescriptor(key: "startDate", ascending: true)
-		request.sortDescriptors = [sorting]
-		let predicate = NSPredicate(format: "parentProject.name MATCHES %@", project.name!)
-		request.predicate = predicate
-		
-		do {
-			return try context.fetch(request)
-		}
-		catch {
-			print("Error while fetching intervals, \(error)")
-		}
-		
-		return [ProjectTimeInterval]()
 	}
 	
 	func getProjectDependentInformation(for project: Project) -> (UInt, Bool) {
-		let intervals = getProjectIntervals(project)
+		let intervals = realm.objects(ProjectTimeInterval.self).filter("parentProject.name MATCHES %@", project)
 		var secondsInProject : UInt = 0
 		
 		for interval in intervals {
 			if !interval.running {
 				let startDate = interval.startDate
-				let endDate = interval.endDate
-				secondsInProject += UInt(round((endDate?.timeIntervalSince(startDate!))!))
+				let endDate = interval.endDate ?? Date()
+				secondsInProject += UInt(round(endDate.timeIntervalSince(startDate)))
 			}
 			else {
 				let currentDate = Date()
-				secondsInProject += UInt(round(currentDate.timeIntervalSince(interval.startDate!)))
+				secondsInProject += UInt(round(currentDate.timeIntervalSince(interval.startDate)))
 			}
 		}
-		
 		if let running = intervals.last?.running {
 			return (secondsInProject, running)
 		}
@@ -151,12 +121,16 @@ class TableViewController: UITableViewController {
 		}
 		
 		let action = UIAlertAction(title: "Create", style: .default) { (action) in
-			let newProject = Project(context: self.context)
-			newProject.name = newProjectTextField.text!
-			
-			self.projects.append(newProject)
-			self.saveProjects()
-			
+			do {
+				try self.realm.write {
+					let newProject = Project()
+					newProject.name = newProjectTextField.text!
+					self.realm.add(newProject)
+				}
+			}
+			catch {
+				print("Error while writing to realm, \(error)")
+			}
 			self.tableView.reloadData()
 		}
 		
@@ -169,7 +143,7 @@ class TableViewController: UITableViewController {
 			if let indexPath = tableView.indexPathForSelectedRow
 			{
 				let destinationVC = segue.destination as! ViewController
-				destinationVC.selectedProject = projects[indexPath.row]
+				destinationVC.selectedProject = projects?[indexPath.row]
 			}
 		}
 	}

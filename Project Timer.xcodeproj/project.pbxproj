@@ -10,26 +10,32 @@
 		4E6A9A8120CB327100B91876 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6A9A8020CB327100B91876 /* AppDelegate.swift */; };
 		4E6A9A8320CB327100B91876 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6A9A8220CB327100B91876 /* ViewController.swift */; };
 		4E6A9A8620CB327100B91876 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E6A9A8420CB327100B91876 /* Main.storyboard */; };
-		4E6A9A8920CB327100B91876 /* Project_Timer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E6A9A8720CB327100B91876 /* Project_Timer.xcdatamodeld */; };
 		4E6A9A8B20CB327200B91876 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E6A9A8A20CB327200B91876 /* Assets.xcassets */; };
 		4E6A9A8E20CB327200B91876 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E6A9A8C20CB327200B91876 /* LaunchScreen.storyboard */; };
 		4E80C4D220CBD04B00AE46D7 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80C4D120CBD04B00AE46D7 /* TableViewController.swift */; };
 		4E80C4D620CBD10C00AE46D7 /* ProjectsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80C4D420CBD10C00AE46D7 /* ProjectsCell.swift */; };
 		4E80C4D720CBD10C00AE46D7 /* ProjectsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E80C4D520CBD10C00AE46D7 /* ProjectsCell.xib */; };
+		4E80C4E320CC8C4D00AE46D7 /* ProjectTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80C4E220CC8C4D00AE46D7 /* ProjectTimeInterval.swift */; };
+		4E80C4E520CC8C9A00AE46D7 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80C4E420CC8C9A00AE46D7 /* Project.swift */; };
+		645C6A33F9EEBF0F2D11F98C /* Pods_Project_Timer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD3ADDDED3F053AF846B088 /* Pods_Project_Timer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C63BA4325E8599C32CC0D95 /* Pods-Project Timer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Timer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Project Timer/Pods-Project Timer.debug.xcconfig"; sourceTree = "<group>"; };
 		4E6A9A7D20CB327100B91876 /* Project Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E6A9A8020CB327100B91876 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E6A9A8220CB327100B91876 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4E6A9A8520CB327100B91876 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4E6A9A8820CB327100B91876 /* Project_Timer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Project_Timer.xcdatamodel; sourceTree = "<group>"; };
 		4E6A9A8A20CB327200B91876 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E6A9A8D20CB327200B91876 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E6A9A8F20CB327200B91876 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E80C4D120CBD04B00AE46D7 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		4E80C4D420CBD10C00AE46D7 /* ProjectsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsCell.swift; sourceTree = "<group>"; };
 		4E80C4D520CBD10C00AE46D7 /* ProjectsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectsCell.xib; sourceTree = "<group>"; };
+		4E80C4E220CC8C4D00AE46D7 /* ProjectTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTimeInterval.swift; sourceTree = "<group>"; };
+		4E80C4E420CC8C9A00AE46D7 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		AA4E304A8347817D9D24E9A0 /* Pods-Project Timer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Timer.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project Timer/Pods-Project Timer.release.xcconfig"; sourceTree = "<group>"; };
+		ACD3ADDDED3F053AF846B088 /* Pods_Project_Timer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Timer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				645C6A33F9EEBF0F2D11F98C /* Pods_Project_Timer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +55,8 @@
 			children = (
 				4E6A9A7F20CB327100B91876 /* Project Timer */,
 				4E6A9A7E20CB327100B91876 /* Products */,
+				EF6C87376FC6ECC5A31D1609 /* Pods */,
+				F2E410815BFE46D0FA9B7EAB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,7 +93,8 @@
 		4E6A9A9620CB32A900B91876 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				4E6A9A8720CB327100B91876 /* Project_Timer.xcdatamodeld */,
+				4E80C4E220CC8C4D00AE46D7 /* ProjectTimeInterval.swift */,
+				4E80C4E420CC8C9A00AE46D7 /* Project.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -116,6 +126,23 @@
 			path = "Custom Cell";
 			sourceTree = "<group>";
 		};
+		EF6C87376FC6ECC5A31D1609 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1C63BA4325E8599C32CC0D95 /* Pods-Project Timer.debug.xcconfig */,
+				AA4E304A8347817D9D24E9A0 /* Pods-Project Timer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F2E410815BFE46D0FA9B7EAB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ACD3ADDDED3F053AF846B088 /* Pods_Project_Timer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -123,9 +150,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4E6A9A9220CB327200B91876 /* Build configuration list for PBXNativeTarget "Project Timer" */;
 			buildPhases = (
+				1FDE5C854D2D357CEA4478A5 /* [CP] Check Pods Manifest.lock */,
 				4E6A9A7920CB327100B91876 /* Sources */,
 				4E6A9A7A20CB327100B91876 /* Frameworks */,
 				4E6A9A7B20CB327100B91876 /* Resources */,
+				76D06EA1C7D717A6C9F41954 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -183,16 +212,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1FDE5C854D2D357CEA4478A5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Project Timer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76D06EA1C7D717A6C9F41954 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Project Timer/Pods-Project Timer-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Project Timer/Pods-Project Timer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4E6A9A7920CB327100B91876 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E80C4E320CC8C4D00AE46D7 /* ProjectTimeInterval.swift in Sources */,
 				4E6A9A8320CB327100B91876 /* ViewController.swift in Sources */,
-				4E6A9A8920CB327100B91876 /* Project_Timer.xcdatamodeld in Sources */,
 				4E6A9A8120CB327100B91876 /* AppDelegate.swift in Sources */,
 				4E80C4D220CBD04B00AE46D7 /* TableViewController.swift in Sources */,
 				4E80C4D620CBD10C00AE46D7 /* ProjectsCell.swift in Sources */,
+				4E80C4E520CC8C9A00AE46D7 /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +409,7 @@
 		};
 		4E6A9A9320CB327200B91876 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C63BA4325E8599C32CC0D95 /* Pods-Project Timer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -353,6 +429,7 @@
 		};
 		4E6A9A9420CB327200B91876 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA4E304A8347817D9D24E9A0 /* Pods-Project Timer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -392,19 +469,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		4E6A9A8720CB327100B91876 /* Project_Timer.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				4E6A9A8820CB327100B91876 /* Project_Timer.xcdatamodel */,
-			);
-			currentVersion = 4E6A9A8820CB327100B91876 /* Project_Timer.xcdatamodel */;
-			path = Project_Timer.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 4E6A9A7520CB327100B91876 /* Project object */;
 }
