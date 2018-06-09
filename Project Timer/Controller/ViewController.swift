@@ -14,6 +14,7 @@ class ViewController: UIViewController {
 	@IBOutlet weak var currentSessionDuration: UILabel!
 	@IBOutlet weak var allTimeDuration: UILabel!
 	@IBOutlet weak var startStopButton: UIButton!
+	@IBOutlet weak var navigationBar: UINavigationItem!
 	
 	var timer = Timer()
 	
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		configureTimerAtStart()
+		navigationBar.title = "HelloWorld"
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -106,5 +108,13 @@ class ViewController: UIViewController {
 		
 	}
 	
+	@IBAction func restartButtonPressed(_ sender: Any) {
+		timerRunning = false
+		timePassedInSeconds = 0
+		allTimePassedInSeconds = 0
+		updateAllTimeLabel()
+		updateCurrentTimeLabel()
+		startStopButton.setTitle("Start", for: .normal)		
+	}
 }
 
