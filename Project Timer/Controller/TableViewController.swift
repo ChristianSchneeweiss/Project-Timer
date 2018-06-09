@@ -50,7 +50,9 @@ class TableViewController: UITableViewController {
 		let currentProject = projects[indexPath.row]
         cell.titleLabel.text = currentProject.name
 		let (seconds, running) = getProjectDependentInformation(for: currentProject)
-		cell.timeLabel.text = String(seconds)
+		let hourString = seconds/3600 > 10 ? "\(seconds / 3600)" : "0\(seconds / 3600)"
+		let minutesString = seconds % 3600 / 60 > 10 ? "\(seconds % 3600 / 60)" : "0\(seconds % 3600 / 60)"
+		cell.timeLabel.text = "\(hourString):\(minutesString)"
 
         return cell
     }
