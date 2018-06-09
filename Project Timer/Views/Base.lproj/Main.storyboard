@@ -33,9 +33,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Projects" id="13l-Ui-oM8">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="KlQ-Pe-hxB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KlQ-Pe-hxB">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" identifier="delete" id="FRc-Ej-hXo"/>
+                                <action selector="addButtonPressed:" destination="NDq-bP-vxm" id="veB-32-Hzg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -137,7 +137,4 @@
             <point key="canvasLocation" x="-1290" y="134"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="FRc-Ej-hXo"/>
-    </inferredMetricsTieBreakers>
 </document>

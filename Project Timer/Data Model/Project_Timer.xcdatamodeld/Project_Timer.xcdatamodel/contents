@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="intervals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProjectTimeInterval" inverseName="parentProject" inverseEntity="ProjectTimeInterval" syncable="YES"/>
+    </entity>
     <entity name="ProjectTimeInterval" representedClassName="ProjectTimeInterval" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="intervalDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="running" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="parentProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="intervals" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ProjectTimeInterval" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="ProjectTimeInterval" positionX="-54" positionY="-9" width="128" height="118"/>
+        <element name="Project" positionX="-245" positionY="9" width="128" height="73"/>
     </elements>
 </model>

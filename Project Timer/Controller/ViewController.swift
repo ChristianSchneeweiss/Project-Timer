@@ -19,6 +19,12 @@ class ViewController: UIViewController {
 	
 	var timer = Timer()
 	
+	var selectedProject : Project? {
+		didSet{
+			load()
+		}
+	}
+	
 	var intervals = [ProjectTimeInterval]()
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	
