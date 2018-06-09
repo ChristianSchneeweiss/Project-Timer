@@ -10,6 +10,10 @@ import UIKit
 import Foundation
 import CoreData
 
+protocol CanBeUpdated {
+	func update()
+}
+
 class ViewController: UIViewController {
 
 	@IBOutlet weak var currentSessionDuration: UILabel!

@@ -49,10 +49,12 @@ class TableViewController: UITableViewController {
 
 		let currentProject = projects[indexPath.row]
         cell.titleLabel.text = currentProject.name
+		
 		let (seconds, running) = getProjectDependentInformation(for: currentProject)
 		let hourString = seconds/3600 > 10 ? "\(seconds / 3600)" : "0\(seconds / 3600)"
 		let minutesString = seconds % 3600 / 60 > 10 ? "\(seconds % 3600 / 60)" : "0\(seconds % 3600 / 60)"
 		cell.timeLabel.text = "\(hourString):\(minutesString)"
+		cell.clockAnimationImage.image = running ? UIImage(named: "hourglass") : UIImage() // <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
         return cell
     }
@@ -171,5 +173,10 @@ class TableViewController: UITableViewController {
 			}
 		}
 	}
-	
+}
+
+extension TableViewController : CanBeUpdated {
+	func update() {
+		tableView.reloadData()
+	}
 }
