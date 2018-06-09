@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ViewController: UIViewController {
 
@@ -18,6 +19,8 @@ class ViewController: UIViewController {
 	
 	var timePassedInSeconds : UInt = 0
 	var allTimePassedInSeconds : UInt = 0
+	var startDate = Date()
+	var prevDate = Date()
 	
 	var seconds : UInt = 0
 	var minutes : UInt = 0
@@ -74,8 +77,14 @@ class ViewController: UIViewController {
 	func configureTimerAtStart() {
 		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
 			if self.timerRunning {
-				self.timePassedInSeconds += 1
-				self.allTimePassedInSeconds += 1
+				
+				let currentDate = Date()
+				
+				let interval = round(currentDate.timeIntervalSince(self.prevDate))
+				self.prevDate = currentDate				
+				
+				self.timePassedInSeconds += UInt(interval)
+				self.allTimePassedInSeconds += UInt(interval)
 				self.updateAllTimeLabel()
 				self.updateCurrentTimeLabel()
 			}
@@ -85,11 +94,11 @@ class ViewController: UIViewController {
 	@IBAction func startStopButtonPressed(_ sender: UIButton) {
 		timerRunning = !timerRunning
 		if timerRunning {
+			startDate = Date()
+			prevDate = startDate
 			startStopButton.setTitle("Stop", for: .normal)
 		}
 		else {
-			//allTimePassedInSeconds += timePassedInSeconds
-//			updateAllTimeLabel()
 			timePassedInSeconds = 0
 			startStopButton.setTitle("Start", for: .normal)
 		}
