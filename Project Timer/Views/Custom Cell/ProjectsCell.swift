@@ -10,6 +10,7 @@ import UIKit
 
 class ProjectsCell: UITableViewCell {
 
+	@IBOutlet weak var clockAnimationImage: UIImageView!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var timeLabel: UILabel!
 	override func awakeFromNib() {

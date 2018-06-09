@@ -19,31 +19,40 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom Project" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzz-Xf-4Re">
-                        <rect key="frame" x="16" y="11" width="218" height="21"/>
+                        <rect key="frame" x="16" y="11" width="204" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NY6-cN-kMF">
-                        <rect key="frame" x="234" y="11" width="70" height="21"/>
+                        <rect key="frame" x="255.5" y="11" width="48.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fka-0Q-Tqo">
+                        <rect key="frame" x="228" y="9" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="GkW-Do-5Rs"/>
+                            <constraint firstAttribute="height" constant="25" id="HjV-v4-1RF"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="fka-0Q-Tqo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5qv-dm-8jF"/>
                     <constraint firstItem="Uzz-Xf-4Re" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Atb-I4-emw"/>
+                    <constraint firstItem="NY6-cN-kMF" firstAttribute="leading" secondItem="fka-0Q-Tqo" secondAttribute="trailing" constant="2.5" id="CCC-8p-ITi"/>
                     <constraint firstItem="NY6-cN-kMF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="IEV-Ga-rOi"/>
                     <constraint firstAttribute="bottom" secondItem="Uzz-Xf-4Re" secondAttribute="bottom" constant="11.5" id="JtY-xS-iIb"/>
-                    <constraint firstItem="NY6-cN-kMF" firstAttribute="leading" secondItem="Uzz-Xf-4Re" secondAttribute="trailing" id="LE2-lC-UD5"/>
                     <constraint firstAttribute="trailing" secondItem="NY6-cN-kMF" secondAttribute="trailing" constant="16" id="OGF-PB-isY"/>
                     <constraint firstItem="Uzz-Xf-4Re" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="cZH-ub-bGD"/>
-                    <constraint firstAttribute="trailing" secondItem="Uzz-Xf-4Re" secondAttribute="trailing" constant="86" id="hyU-2y-ljd"/>
+                    <constraint firstAttribute="trailing" secondItem="Uzz-Xf-4Re" secondAttribute="trailing" constant="100" id="hyU-2y-ljd"/>
                     <constraint firstAttribute="bottom" secondItem="NY6-cN-kMF" secondAttribute="bottom" constant="11.5" id="pHd-zx-D7N"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="clockAnimationImage" destination="fka-0Q-Tqo" id="tus-Ub-8Dq"/>
                 <outlet property="timeLabel" destination="NY6-cN-kMF" id="1n7-qF-rub"/>
                 <outlet property="titleLabel" destination="Uzz-Xf-4Re" id="3Ed-8d-t7f"/>
             </connections>

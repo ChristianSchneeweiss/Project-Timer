@@ -85,6 +85,8 @@ class ViewController: UIViewController {
 	func preparationForView() {
 		if let running = (intervals.last?.running) {
 			timerRunning = running
+			let buttonTitle = timerRunning ? "Stop" : "Start"
+			startStopButton.setTitle(buttonTitle, for: .normal)
 		}
 		calculateTime()
 		updateAllTimeLabel()

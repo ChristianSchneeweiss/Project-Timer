@@ -42,7 +42,10 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectsCell", for: indexPath) as! ProjectsCell
 
-        cell.titleLabel.text = projects[indexPath.row].name
+		let currentProject = projects[indexPath.row]
+        cell.titleLabel.text = currentProject.name
+		let (seconds, running) = getProjectDependentInformation(for: currentProject)
+		cell.timeLabel.text = String(seconds)
 
         return cell
     }
@@ -71,6 +74,49 @@ class TableViewController: UITableViewController {
 		}
 		
 		tableView.reloadData()
+	}
+	
+	fileprivate func getProjectIntervals(_ project: Project) -> [ProjectTimeInterval] {
+		let request : NSFetchRequest<ProjectTimeInterval> = ProjectTimeInterval.fetchRequest()
+		let sorting = NSSortDescriptor(key: "startDate", ascending: true)
+		request.sortDescriptors = [sorting]
+		let predicate = NSPredicate(format: "parentProject.name MATCHES %@", project.name!)
+		request.predicate = predicate
+		
+		do {
+			return try context.fetch(request)
+		}
+		catch {
+			print("Error while fetching intervals, \(error)")
+		}
+		
+		return [ProjectTimeInterval]()
+	}
+	
+	func getProjectDependentInformation(for project: Project) -> (UInt, Bool) {
+		let intervals = getProjectIntervals(project)
+		var secondsInProject : UInt = 0
+		
+		for interval in intervals {
+			if !interval.running {
+				let startDate = interval.startDate
+				let endDate = interval.endDate
+				secondsInProject += UInt(round((endDate?.timeIntervalSince(startDate!))!))
+			}
+			else {
+				let currentDate = Date()
+				secondsInProject += UInt(round(currentDate.timeIntervalSince(interval.startDate!)))
+			}
+		}
+		
+		if let running = intervals.last?.running {
+			return (secondsInProject, running)
+		}
+		else {
+			return (secondsInProject,false)
+		}
+		
+		
 	}
 	
 	//MARK: Table View Delegate Methods
