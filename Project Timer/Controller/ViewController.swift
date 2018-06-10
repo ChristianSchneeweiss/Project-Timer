@@ -19,9 +19,12 @@ class ViewController: UIViewController {
 	@IBOutlet weak var currentSessionDuration: UILabel!
 	@IBOutlet weak var allTimeDuration: UILabel!
 	@IBOutlet weak var startStopButton: UIButton!
-	@IBOutlet weak var navigationBar: UINavigationItem!
+	@IBOutlet weak var navigationBar: UINavigationItem! // TODO: better code
+	
+	var delegate : CanBeUpdated?
 	
 	var timer = Timer()
+	let realm = try! Realm()
 	
 	var selectedProject : Project? {
 		didSet{
@@ -29,8 +32,7 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	var intervals = [ProjectTimeInterval]()
-	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+	var intervals : Results<ProjectTimeInterval>?
 	
 	var timePassedInSeconds : UInt = 0
 	var allTimePassedInSeconds : UInt = 0
@@ -43,15 +45,14 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 		configureTimerAtStart()
 		
-		navigationBar.title = selectedProject?.name!
+		navigationBar.title = selectedProject?.name ?? "no Title"
 		preparationForView()
 	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
 	
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		delegate?.update()
+	}
 	
 	func timeToString(hours: UInt, minutes: UInt, seconds: UInt) -> (String,String,String) {
 		let hoursString = hours<10 ? "0\(hours)" : String(hours)
@@ -62,32 +63,12 @@ class ViewController: UIViewController {
 	
 	//MARK: Core Data Manipulation
 	
-	func save() {
-		do {
-			try context.save()
-		}
-		catch {
-			print("Error while saving Context, \(error)")
-		}
-	}
-	
 	func load() {
-		let request : NSFetchRequest<ProjectTimeInterval> = ProjectTimeInterval.fetchRequest()
-		let sorting = NSSortDescriptor(key: "startDate", ascending: true)
-		request.sortDescriptors = [sorting]
-		let predicate = NSPredicate(format: "parentProject.name MATCHES %@", (selectedProject?.name!)!)
-		request.predicate = predicate
-		
-		do {
-			intervals = try context.fetch(request)
-		}
-		catch {
-			print("Error while fetching intervals, \(error)")
-		}
+		intervals = selectedProject?.intervals.sorted(byKeyPath: "startDate", ascending: true)
 	}
 	
 	func preparationForView() {
-		if let running = (intervals.last?.running) {
+		if let running = (intervals?.last?.running) {
 			timerRunning = running
 			let buttonTitle = timerRunning ? "Stop" : "Start"
 			startStopButton.setTitle(buttonTitle, for: .normal)
@@ -121,13 +102,15 @@ class ViewController: UIViewController {
 	func calculateTime() {
 		allTimePassedInSeconds = 0
 		timePassedInSeconds = 0
-		for interval in intervals {
-			if !interval.running {
-				allTimePassedInSeconds += UInt(round((interval.endDate?.timeIntervalSince(interval.startDate!))!))				
+		if let timeIntervals = intervals {
+			for interval in timeIntervals {
+				if !interval.running {
+					allTimePassedInSeconds += UInt(round((interval.endDate?.timeIntervalSince(interval.startDate))!))
+				}
 			}
 		}
 		if timerRunning {
-			if let startDate = intervals.last?.startDate {
+			if let startDate = intervals?.last?.startDate {
 				let currentDate = Date()
 				timePassedInSeconds = UInt(round(currentDate.timeIntervalSince(startDate)))
 			}
@@ -154,23 +137,36 @@ class ViewController: UIViewController {
 	}
 	
 	fileprivate func startTimer() {
-		let newInterval = ProjectTimeInterval(context: context)
-		newInterval.startDate = Date()
-		newInterval.running = true
-		newInterval.parentProject = selectedProject
-		intervals.append(newInterval)
+		
+		do {
+			try self.realm.write() {
+				let newInterval = ProjectTimeInterval()
+				newInterval.startDate = Date()
+				newInterval.running = true
+				selectedProject?.intervals.append(newInterval)
+			}
+		}
+		catch {
+			print("Error while saving intervals, \(error)")
+		}
 		prevDate = Date()
-		save()
 		timePassedInSeconds = 0
 		startStopButton.setTitle("Stop", for: .normal)
 	}
 	
 	fileprivate func stopTimer() {
 		timePassedInSeconds = 0
-		intervals.last?.running = false
-		intervals.last?.endDate = Date()
+		
+		do {
+			try realm.write() {
+				intervals?.last?.running = false
+				intervals?.last?.endDate = Date()
+			}
+		}
+		catch {
+			print("Error while stoping and writing to the realm, \(error)")
+		}
 		startStopButton.setTitle("Start", for: .normal)
-		save()
 	}
 	
 	@IBAction func startStopButtonPressed(_ sender: UIButton) {
@@ -186,11 +182,18 @@ class ViewController: UIViewController {
 	}
 	
 	@IBAction func restartButtonPressed(_ sender: Any) {
-		for interval in intervals {
-			context.delete(interval)
+		if let timeIntervals = intervals {
+			for interval in timeIntervals {
+				do {
+					try realm.write {
+						realm.delete(interval)
+					}
+				}
+				catch {
+					print("Error while restarting and deleting, \(error)")
+				}
+			}
 		}
-		save()
-		intervals = [ProjectTimeInterval]()
 		timerRunning = false
 		timePassedInSeconds = 0
 		allTimePassedInSeconds = 0

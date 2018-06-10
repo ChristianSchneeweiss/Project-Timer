@@ -17,12 +17,7 @@ class TableViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+		
 		tableView.register(UINib(nibName: "ProjectsCell", bundle: nil), forCellReuseIdentifier: "ProjectsCell")
 		let refreshControl = UIRefreshControl()
 		tableView.refreshControl = refreshControl
@@ -79,7 +74,7 @@ class TableViewController: UITableViewController {
 	}
 	
 	func getProjectDependentInformation(for project: Project) -> (UInt, Bool) {
-		let intervals = realm.objects(ProjectTimeInterval.self).filter("parentProject.name MATCHES %@", project)
+		let intervals = project.intervals.sorted(byKeyPath: "startDate", ascending: true)
 		var secondsInProject : UInt = 0
 		
 		for interval in intervals {
@@ -99,8 +94,6 @@ class TableViewController: UITableViewController {
 		else {
 			return (secondsInProject,false)
 		}
-		
-		
 	}
 	
 	//MARK: Table View Delegate Methods
@@ -126,6 +119,7 @@ class TableViewController: UITableViewController {
 					let newProject = Project()
 					newProject.name = newProjectTextField.text!
 					self.realm.add(newProject)
+					print("realm write Project successful")
 				}
 			}
 			catch {
@@ -144,13 +138,14 @@ class TableViewController: UITableViewController {
 			{
 				let destinationVC = segue.destination as! ViewController
 				destinationVC.selectedProject = projects?[indexPath.row]
+				destinationVC.delegate = self
 			}
 		}
 	}
 }
 
 extension TableViewController : CanBeUpdated {
-	func update() {
+	func update() {		
 		tableView.reloadData()
 	}
 }
