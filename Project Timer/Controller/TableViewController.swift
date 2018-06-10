@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Foundation
 import ChameleonFramework
+import PopupDialog
 
 class TableViewController: UITableViewController {
 
@@ -200,6 +201,20 @@ class TableViewController: UITableViewController {
 				destinationVC.bColor = color?.darken(byPercentage: CGFloat(Double(indexPath.row)/Double(projects!.count)))
 			}
 		}
+	}
+	
+	//MARK: Color Picker
+	
+	@IBAction func colorButtonPressed(_ sender: UIBarButtonItem) {
+		// Create a custom view controller
+		let colorVC = ColorPopUp(nibName: "ColorPopUp", bundle: nil)
+		
+		// Create the dialog
+		let popup = PopupDialog(viewController: colorVC)
+	
+		// Present dialog
+		present(popup, animated: true, completion: nil)
+		
 	}
 }
 

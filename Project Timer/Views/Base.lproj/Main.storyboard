@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,12 +34,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Projects" id="13l-Ui-oM8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KlQ-Pe-hxB">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="addButtonPressed:" destination="NDq-bP-vxm" id="veB-32-Hzg"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="KlQ-Pe-hxB">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="NDq-bP-vxm" id="veB-32-Hzg"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Color" style="plain" id="2Ds-i0-mRQ">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="colorButtonPressed:" destination="NDq-bP-vxm" id="Vmd-dP-H7Z"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="goToTimer" id="G43-5p-iN0"/>
