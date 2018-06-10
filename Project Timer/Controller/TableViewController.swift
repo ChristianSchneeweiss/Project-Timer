@@ -9,11 +9,13 @@
 import UIKit
 import RealmSwift
 import Foundation
+import ChameleonFramework
 
 class TableViewController: UITableViewController {
 
 	var projects : Results<Project>?
 	var timer = Timer()
+	let color = UIColor.flatSkyBlue()
 	
 	let realm = try! Realm()
 	
@@ -26,6 +28,7 @@ class TableViewController: UITableViewController {
 		refreshControl.addTarget(self, action: #selector(refreshProjectData), for: .valueChanged)
 		refreshControl.attributedTitle = NSAttributedString(string: "Updating ... ")
 		
+		tableView.separatorStyle = .none
 		loadProjects()
 		configureTimerAtStart()
 		
@@ -49,22 +52,35 @@ class TableViewController: UITableViewController {
 	}
 
 	
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectsCell", for: indexPath) as! ProjectsCell
-		
+	fileprivate func cellText(_ currentProject: Project, _ cell: ProjectsCell) {
+		let (seconds, running) = getProjectDependentInformation(for: currentProject)
+		let hourString = seconds/3600 > 10 ? "\(seconds / 3600)" : "0\(seconds / 3600)"
+		let minutesString = seconds % 3600 / 60 > 10 ? "\(seconds % 3600 / 60)" : "0\(seconds % 3600 / 60)"
+		cell.timeLabel.text = "\(hourString):\(minutesString)"
+		cell.clockAnimationImage.image = running ? UIImage(named: "hourglass") : UIImage()  // <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+	}
+	
+	fileprivate func cellUI(_ indexPath: IndexPath, _ cell: ProjectsCell) {
 		if let currentProject = projects?[indexPath.row] {
-        	cell.titleLabel.text = currentProject.name
-		
-			let (seconds, running) = getProjectDependentInformation(for: currentProject)
-			let hourString = seconds/3600 > 10 ? "\(seconds / 3600)" : "0\(seconds / 3600)"
-			let minutesString = seconds % 3600 / 60 > 10 ? "\(seconds % 3600 / 60)" : "0\(seconds % 3600 / 60)"
-			cell.timeLabel.text = "\(hourString):\(minutesString)"
-			cell.clockAnimationImage.image = running ? UIImage(named: "hourglass") : UIImage() // <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+			cell.titleLabel.text = currentProject.name
+			let bColor = color?.darken(byPercentage: CGFloat(Double(indexPath.row)/Double(projects!.count)))
+			cell.backgroundColor = bColor
+			let contrastColor = UIColor(contrastingBlackOrWhiteColorOn: bColor, isFlat: true)
+			cell.titleLabel.textColor = contrastColor
+			cell.timeLabel.textColor = contrastColor
+			
+			cellText(currentProject, cell)
 		}
 		else {
 			cell.titleLabel.text = "No Projects have been added yet"
 			cell.timeLabel.text = ""
 		}
+	}
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectsCell", for: indexPath) as! ProjectsCell
+		
+		cellUI(indexPath, cell)
 
         return cell
     }
@@ -152,6 +168,7 @@ class TableViewController: UITableViewController {
 				let destinationVC = segue.destination as! ViewController
 				destinationVC.selectedProject = projects?[indexPath.row]
 				destinationVC.delegate = self
+				destinationVC.bColor = color?.darken(byPercentage: CGFloat(Double(indexPath.row)/Double(projects!.count)))
 			}
 		}
 	}

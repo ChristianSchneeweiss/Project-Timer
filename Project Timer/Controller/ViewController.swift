@@ -25,6 +25,7 @@ class ViewController: UIViewController {
 	
 	var timer = Timer()
 	let realm = try! Realm()
+	var bColor : UIColor?
 	
 	var selectedProject : Project? {
 		didSet{
@@ -47,6 +48,13 @@ class ViewController: UIViewController {
 		
 		navigationBar.title = selectedProject?.name ?? "no Title"
 		preparationForView()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		view.backgroundColor = bColor
+		let contrastColor = UIColor(contrastingBlackOrWhiteColorOn: bColor, isFlat: true)
+		allTimeDuration.textColor = contrastColor
+		currentSessionDuration.textColor = contrastColor
 	}
 	
 	
