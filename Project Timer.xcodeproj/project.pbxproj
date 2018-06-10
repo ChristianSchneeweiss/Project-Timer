@@ -17,6 +17,8 @@
 		4E80C4D720CBD10C00AE46D7 /* ProjectsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E80C4D520CBD10C00AE46D7 /* ProjectsCell.xib */; };
 		4E80C4E320CC8C4D00AE46D7 /* ProjectTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80C4E220CC8C4D00AE46D7 /* ProjectTimeInterval.swift */; };
 		4E80C4E520CC8C9A00AE46D7 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80C4E420CC8C9A00AE46D7 /* Project.swift */; };
+		4EA02FE520CD7CA1001DCE47 /* ColorPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA02FE320CD7CA1001DCE47 /* ColorPopUp.swift */; };
+		4EA02FE620CD7CA1001DCE47 /* ColorPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EA02FE420CD7CA1001DCE47 /* ColorPopUp.xib */; };
 		645C6A33F9EEBF0F2D11F98C /* Pods_Project_Timer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD3ADDDED3F053AF846B088 /* Pods_Project_Timer.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,8 @@
 		4E80C4D520CBD10C00AE46D7 /* ProjectsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectsCell.xib; sourceTree = "<group>"; };
 		4E80C4E220CC8C4D00AE46D7 /* ProjectTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTimeInterval.swift; sourceTree = "<group>"; };
 		4E80C4E420CC8C9A00AE46D7 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		4EA02FE320CD7CA1001DCE47 /* ColorPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPopUp.swift; sourceTree = "<group>"; };
+		4EA02FE420CD7CA1001DCE47 /* ColorPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPopUp.xib; sourceTree = "<group>"; };
 		AA4E304A8347817D9D24E9A0 /* Pods-Project Timer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project Timer.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project Timer/Pods-Project Timer.release.xcconfig"; sourceTree = "<group>"; };
 		ACD3ADDDED3F053AF846B088 /* Pods_Project_Timer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project_Timer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +90,7 @@
 			children = (
 				4E80C4D320CBD0E900AE46D7 /* Custom Cell */,
 				4E6A9A8420CB327100B91876 /* Main.storyboard */,
+				4EA02FE420CD7CA1001DCE47 /* ColorPopUp.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -102,6 +107,7 @@
 		4E6A9A9720CB32BC00B91876 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4EA02FE320CD7CA1001DCE47 /* ColorPopUp.swift */,
 				4E6A9A8220CB327100B91876 /* ViewController.swift */,
 				4E80C4D120CBD04B00AE46D7 /* TableViewController.swift */,
 			);
@@ -206,6 +212,7 @@
 				4E6A9A8E20CB327200B91876 /* LaunchScreen.storyboard in Resources */,
 				4E6A9A8B20CB327200B91876 /* Assets.xcassets in Resources */,
 				4E6A9A8620CB327100B91876 /* Main.storyboard in Resources */,
+				4EA02FE620CD7CA1001DCE47 /* ColorPopUp.xib in Resources */,
 				4E80C4D720CBD10C00AE46D7 /* ProjectsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,16 +246,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Project Timer/Pods-Project Timer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -263,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E80C4E320CC8C4D00AE46D7 /* ProjectTimeInterval.swift in Sources */,
+				4EA02FE520CD7CA1001DCE47 /* ColorPopUp.swift in Sources */,
 				4E6A9A8320CB327100B91876 /* ViewController.swift in Sources */,
 				4E6A9A8120CB327100B91876 /* AppDelegate.swift in Sources */,
 				4E80C4D220CBD04B00AE46D7 /* TableViewController.swift in Sources */,

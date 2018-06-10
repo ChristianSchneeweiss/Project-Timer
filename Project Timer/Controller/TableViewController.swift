@@ -10,12 +10,13 @@ import UIKit
 import RealmSwift
 import Foundation
 import ChameleonFramework
+import PopupDialog
 
 class TableViewController: UITableViewController {
 
 	var projects : Results<Project>?
 	var timer = Timer()
-	let color = UIColor.flatSkyBlue()
+	var color = UIColor.flatSkyBlue()
 	
 	let realm = try! Realm()
 	
@@ -201,6 +202,21 @@ class TableViewController: UITableViewController {
 			}
 		}
 	}
+	
+	//MARK: Color Picker
+	
+	@IBAction func colorButtonPressed(_ sender: UIBarButtonItem) {
+		// Create a custom view controller
+		let colorVC = ColorPopUp(nibName: "ColorPopUp", bundle: nil)
+		colorVC.delegate = self
+		
+		// Create the dialog
+		let popup = PopupDialog(viewController: colorVC)
+	
+		// Present dialog
+		present(popup, animated: true, completion: nil)
+		
+	}
 }
 
 extension TableViewController : CanBeUpdated {
@@ -272,5 +288,12 @@ extension TableViewController {
 			
 			self.present(alertToCheck, animated: true, completion: nil)
 		}
+	}
+}
+
+extension TableViewController : CanChangeColor {
+	func changeColor(to colorChosen: UIColor) {
+		color = colorChosen
+		update()
 	}
 }

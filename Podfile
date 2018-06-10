@@ -5,8 +5,8 @@ target 'Project Timer' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-	# Pods for Project Timer
-	pod 'SwipeCellKit'
+	# Pods for Project Timer	
 	pod 'ChameleonFramework'
 	pod 'RealmSwift'
+	pod 'PopupDialog', '~> 0.7'
 end
