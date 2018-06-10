@@ -117,7 +117,6 @@ class TableViewController: UITableViewController {
 		tableView.refreshControl?.endRefreshing()
 	}
 	
-	
 	//MARK: Realm Data Methods
 	
 	
@@ -167,22 +166,25 @@ class TableViewController: UITableViewController {
 			newProjectTextField = textField
 		}
 		
-		let action = UIAlertAction(title: "Create", style: .default) { (action) in
+		let addProjectAction = UIAlertAction(title: "Create", style: .default) { (action) in
 			do {
-				try self.realm.write {
-					let newProject = Project()
-					newProject.name = newProjectTextField.text!
-					self.realm.add(newProject)
-					print("realm write Project successful")
+				if newProjectTextField.text! != "" {
+					try self.realm.write {
+						let newProject = Project()
+						newProject.name = newProjectTextField.text!
+						self.realm.add(newProject)
+					}
+					self.tableView.reloadData()
 				}
 			}
 			catch {
 				print("Error while writing to realm, \(error)")
 			}
-			self.tableView.reloadData()
 		}
 		
-		alert.addAction(action)
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		alert.addAction(addProjectAction)
 		present(alert, animated: true, completion: nil)
 	}
 	
