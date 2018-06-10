@@ -4,14 +4,16 @@
 //
 //  Created by Christian Schneeweiss on 09.06.18.
 //  Copyright © 2018 Christian Schneeweiss. All rights reserved.
-// Appicon : <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+//  Appicon : <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 import UIKit
 import RealmSwift
+import Foundation
 
 class TableViewController: UITableViewController {
 
 	var projects : Results<Project>?
+	var timer = Timer()
 	
 	let realm = try! Realm()
 	
@@ -25,6 +27,8 @@ class TableViewController: UITableViewController {
 		refreshControl.attributedTitle = NSAttributedString(string: "Updating ... ")
 		
 		loadProjects()
+		configureTimerAtStart()
+		
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,6 +36,12 @@ class TableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+	func configureTimerAtStart() {
+		timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true){ (timer) in
+			self.update()
+		}
+	}
+	
     // MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,8 +111,9 @@ class TableViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		performSegue(withIdentifier: "goToTimer", sender: self)
 	}
+
 	
-	//MARK: Navigation
+	
 	
 	@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
 		var newProjectTextField = UITextField()
@@ -131,6 +142,8 @@ class TableViewController: UITableViewController {
 		alert.addAction(action)
 		present(alert, animated: true, completion: nil)
 	}
+	
+	//MARK: Navigation
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "goToTimer" {
