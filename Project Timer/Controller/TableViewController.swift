@@ -67,6 +67,7 @@ class TableViewController: UITableViewController {
 				print(projects![indexPath.row].name)
 				let selectedProject = projects![indexPath.row]
 				
+				createProjectActionSheet(for: selectedProject)
 			}
 		}
 	}
@@ -203,5 +204,71 @@ class TableViewController: UITableViewController {
 extension TableViewController : CanBeUpdated {
 	func update() {		
 		tableView.reloadData()
+	}
+}
+
+extension TableViewController {
+	
+	//MARK: Long Press Functionality
+	
+	fileprivate func createProjectActionSheet(for selectedProject: Project) {
+		let actionSheetPicker = UIAlertController(title: selectedProject.name, message: "What do You want to do with this Project", preferredStyle: .actionSheet)
+		let editAction = self.editAction(selectedProject)
+		let deleteAction = self.deleteAction(selectedProject)
+		
+		actionSheetPicker.addAction(editAction)
+		actionSheetPicker.addAction(deleteAction)
+		actionSheetPicker.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		present(actionSheetPicker, animated: true, completion: nil)
+	}
+	
+	fileprivate func editAction(_ selectedProject: Project) -> UIAlertAction {
+		return UIAlertAction(title: "Edit", style: .default) { (action) in
+			var textField = UITextField()
+			
+			let alert = UIAlertController(title: "Edit", message: "", preferredStyle: .alert)
+			alert.addTextField(configurationHandler: { (editTextField) in
+				editTextField.text = selectedProject.name
+				textField = editTextField
+			})
+			
+			let action = UIAlertAction(title: "Edit", style: .default, handler: { (action) in
+				do {
+					if textField.text! != "" {
+						try self.realm.write {
+							selectedProject.name = textField.text!
+						}
+						self.update()
+					}
+				}
+				catch {
+					print("Error while editing Text, \(error)")
+				}
+			})
+			alert.addAction(action)
+			alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+			self.present(alert, animated: true, completion: nil)
+		}
+	}
+	
+	fileprivate func deleteAction(_ selectedProject: Project) -> UIAlertAction {
+		return UIAlertAction(title: "Delete", style: .destructive) { (action) in
+			
+			let alertToCheck = UIAlertController(title: "Delete", message: "Are You sure you want to delete \(selectedProject.name)", preferredStyle: .alert)
+			alertToCheck.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+			alertToCheck.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+				do {
+					try self.realm.write {
+						self.realm.delete(selectedProject)
+					}
+					self.update()
+				}
+				catch {
+					print("Error while deleting Project, \(error)")
+				}
+			}))
+			
+			self.present(alertToCheck, animated: true, completion: nil)
+		}
 	}
 }
