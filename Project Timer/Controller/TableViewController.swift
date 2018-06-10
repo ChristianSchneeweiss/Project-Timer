@@ -19,7 +19,9 @@ class TableViewController: UITableViewController {
 	
 	let realm = try! Realm()
 	
-    override func viewDidLoad() {
+	
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
 		
 		tableView.register(UINib(nibName: "ProjectsCell", bundle: nil), forCellReuseIdentifier: "ProjectsCell")
@@ -27,6 +29,8 @@ class TableViewController: UITableViewController {
 		tableView.refreshControl = refreshControl
 		refreshControl.addTarget(self, action: #selector(refreshProjectData), for: .valueChanged)
 		refreshControl.attributedTitle = NSAttributedString(string: "Updating ... ")
+		
+		initaliseLongPressRecognizer(forSeconds: 0.75)
 		
 		tableView.separatorStyle = .none
 		loadProjects()
@@ -38,10 +42,32 @@ class TableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+	
+	
+	
 	func configureTimerAtStart() {
 		timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true){ (timer) in
 			self.update()
+		}
+	}
+	
+	fileprivate func initaliseLongPressRecognizer(forSeconds time : Double) {
+		let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+		longPressRecognizer.minimumPressDuration = CFTimeInterval(time)
+		self.view.addGestureRecognizer(longPressRecognizer)
+	}
+	
+	@objc func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+		
+		if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
+			
+			let touchPoint = longPressGestureRecognizer.location(in: self.view)
+			if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+				
+				print(projects![indexPath.row].name)
+				let selectedProject = projects![indexPath.row]
+				
+			}
 		}
 	}
 	
