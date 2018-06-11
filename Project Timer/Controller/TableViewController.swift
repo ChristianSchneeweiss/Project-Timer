@@ -122,7 +122,7 @@ class TableViewController: UITableViewController {
 	
 	
 	func loadProjects() {
-		projects = realm.objects(Project.self)
+		projects = realm.objects(Project.self).filter("archiv == false")
 		tableView.reloadData()
 	}
 	
@@ -228,13 +228,18 @@ extension TableViewController : CanBeUpdated {
 extension TableViewController {
 	
 	//MARK: Long Press Functionality
+
 	
 	fileprivate func createProjectActionSheet(for selectedProject: Project) {
 		let actionSheetPicker = UIAlertController(title: selectedProject.name, message: "What do You want to do with this Project", preferredStyle: .actionSheet)
 		let editAction = self.editAction(selectedProject)
 		let deleteAction = self.deleteAction(selectedProject)
+		let archivAction = self.archivAction(selectedProject)
+		
+		
 		
 		actionSheetPicker.addAction(editAction)
+		actionSheetPicker.addAction(archivAction)
 		actionSheetPicker.addAction(deleteAction)
 		actionSheetPicker.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		present(actionSheetPicker, animated: true, completion: nil)
@@ -266,6 +271,23 @@ extension TableViewController {
 			alert.addAction(action)
 			alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 			self.present(alert, animated: true, completion: nil)
+		}
+	}
+	
+	
+	fileprivate func archivAction(_ selectedProject: Project) -> UIAlertAction {
+		return UIAlertAction(title: "Archive", style: .default) { (action) in
+			do {
+				try self.realm.write {
+					selectedProject.archiv = true
+					selectedProject.intervals.last?.endDate = Date()
+					selectedProject.intervals.last?.running = false
+				}
+				self.update()
+			}
+			catch {
+				print("Error while archiving project, \(error)")
+			}
 		}
 	}
 	

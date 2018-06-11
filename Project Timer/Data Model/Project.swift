@@ -11,5 +11,6 @@ import RealmSwift
 
 class Project: Object {
 	@objc dynamic var name = ""
+	@objc dynamic var archiv : Bool = false
 	let intervals = List<ProjectTimeInterval>()
 }
