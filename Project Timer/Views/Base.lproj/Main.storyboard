@@ -34,7 +34,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Projects" id="13l-Ui-oM8">
-                        <barButtonItem key="leftBarButtonItem" title="Archiv" id="BNd-Cl-2eU">
+                        <barButtonItem key="leftBarButtonItem" title="Archive" id="BNd-Cl-2eU">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="Jhr-eL-5tF" kind="show" id="1vI-wm-v3M"/>
@@ -63,7 +63,7 @@
             </objects>
             <point key="canvasLocation" x="-311" y="134"/>
         </scene>
-        <!--ArchivTVC-->
+        <!--Archive-->
         <scene sceneID="GTv-XF-H2R">
             <objects>
                 <tableViewController id="Jhr-eL-5tF" customClass="ArchivTVC" customModule="Project_Timer" customModuleProvider="target" sceneMemberID="viewController">
@@ -86,6 +86,7 @@
                             <outlet property="delegate" destination="Jhr-eL-5tF" id="VPG-UH-yF5"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Archive" id="wKN-bw-5QH"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ef2-q0-zEt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
